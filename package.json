@@ -1,17 +1,35 @@
 {
   "name": "postman-mcp",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js`",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "postman",
+    "mcp",
+    "model context protocol",
+    "typescript",
+    "claude"
+  ],
+  "author": "Saleh Khatri <saleh@salehkhatri.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salehkhatri/postman-mcp"
+  },
+  "license": "MIT",
+  "description": "A Model Context Protocol (MCP) server that provides seamless integration with the Postman API. This package enables AI assistants and applications to interact with Postman workspaces, collections, requests, environments, and folders programmatically.",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.13.2",
     "axios": "^1.10.0",

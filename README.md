@@ -3,7 +3,7 @@
 A **Model Context Protocol (MCP)** server that provides seamless integration with the Postman API. This package enables AI assistants and applications to interact with Postman workspaces, collections, requests, environments, and folders programmatically.
 
 [![npm version](https://badge.fury.io/js/postman-mcp.svg)](https://badge.fury.io/js/postman-mcp)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## 🚀 Features
 
@@ -264,7 +264,7 @@ await mcp.callTool("create_environment", {
 
 ## 📄 License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🔗 Links
 

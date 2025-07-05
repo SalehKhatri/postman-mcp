@@ -237,7 +237,7 @@ For feature requests, please include:
 
 ## 📄 License
 
-By contributing to Postman MCP, you agree that your contributions will be licensed under the ISC License.
+By contributing to Postman MCP, you agree that your contributions will be licensed under the MIT License.
 
 ## 🆘 Need Help?
 
