@@ -206,6 +206,7 @@ export class PostmanClient {
       url: string;
       headers?: Record<string, string> | Array<{ key: string; value: string }>;
       body?: any;
+      folder?: string;
       description?: string;
     }>
   ): Promise<{ success: boolean; message: string }> {
@@ -215,6 +216,20 @@ export class PostmanClient {
 
       if (!item || !item.request) {
         throw new Error(`Request "${requestName}" not found`);
+      }
+
+      // Handle folder movement first (if specified)
+      if (updates.folder !== undefined) {
+        // Remove the item from its current location
+        this.removeItemFromCollection(collection, requestName);
+
+        // Add it to the new folder (or root if folder is empty string)
+        if (updates.folder) {
+          this.addToFolder(collection, item, updates.folder);
+        } else {
+          // Move to root level
+          collection.item.push(item);
+        }
       }
 
       // Update request properties
@@ -316,7 +331,7 @@ export class PostmanClient {
     return response.data.environment;
   }
 
-  async createEnviromnt(
+  async createEnvironment(
     name: string,
     values: PostmanVariable[],
     workspaceId: string
@@ -408,5 +423,27 @@ export class PostmanClient {
     }
 
     currentItems.push(item);
+  }
+  private removeItemFromCollection(
+    collection: PostmanCollection,
+    itemName: string
+  ): boolean {
+    const removeFromItems = (items: PostmanItem[]): boolean => {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].name === itemName) {
+          items.splice(i, 1);
+          return true;
+        }
+        // Check in folders
+        if (items[i].item) {
+          if (removeFromItems(items[i].item!)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    return removeFromItems(collection.item);
   }
 }

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
 import { PostmanClient } from "../postman-client.js";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { zodToMCPInputSchema } from "../utils/schema-converter.js";
 
 interface ToolDefinition<TSchema extends z.ZodSchema, TResult> {
   name: string;
@@ -103,8 +103,8 @@ export const toolDefinitions = {
     handler: async (client, args) => {
       return client.createCollection(
         args.name,
-        args.description,
-        args.workspaceId
+        args.workspaceId,
+        args.description
       );
     },
   }),
@@ -221,6 +221,7 @@ export const toolDefinitions = {
           headers: z.record(z.string()).optional(),
           body: z.any().optional(),
           description: z.string().optional(),
+          folder: z.string().optional(),
         })
         .describe("Fields to update"),
     }),
@@ -280,7 +281,7 @@ export const toolDefinitions = {
       workspaceId: z.string().describe("The ID of the workspace"),
     }),
     handler: async (client, args) =>
-      client.createEnviromnt(args.name, args.values || [], args.workspaceId),
+      client.createEnvironment(args.name, args.values || [], args.workspaceId),
   }),
 
   updateEnvironment: defineTool({
@@ -346,7 +347,7 @@ export const toolDefinitions = {
 export const tools: Tool[] = Object.values(toolDefinitions).map((def) => ({
   name: def.name,
   description: def.description,
-  inputSchema: zodToJsonSchema(def.schema) as any,
+  inputSchema: zodToMCPInputSchema(def.schema),
 }));
 
 // Create a map for easy handler lookup

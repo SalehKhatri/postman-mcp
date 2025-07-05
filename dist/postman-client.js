@@ -145,6 +145,19 @@ export class PostmanClient {
             if (!item || !item.request) {
                 throw new Error(`Request "${requestName}" not found`);
             }
+            // Handle folder movement first (if specified)
+            if (updates.folder !== undefined) {
+                // Remove the item from its current location
+                this.removeItemFromCollection(collection, requestName);
+                // Add it to the new folder (or root if folder is empty string)
+                if (updates.folder) {
+                    this.addToFolder(collection, item, updates.folder);
+                }
+                else {
+                    // Move to root level
+                    collection.item.push(item);
+                }
+            }
             // Update request properties
             if (updates.name)
                 item.name = updates.name;
@@ -231,7 +244,7 @@ export class PostmanClient {
         const response = await this.api.get(`/environments/${environmentUid}`);
         return response.data.environment;
     }
-    async createEnviromnt(name, values, workspaceId) {
+    async createEnvironment(name, values, workspaceId) {
         const response = await this.api.post("/environments", {
             environment: {
                 name,
@@ -295,5 +308,23 @@ export class PostmanClient {
             currentItems = folder.item;
         }
         currentItems.push(item);
+    }
+    removeItemFromCollection(collection, itemName) {
+        const removeFromItems = (items) => {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].name === itemName) {
+                    items.splice(i, 1);
+                    return true;
+                }
+                // Check in folders
+                if (items[i].item) {
+                    if (removeFromItems(items[i].item)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        return removeFromItems(collection.item);
     }
 }
