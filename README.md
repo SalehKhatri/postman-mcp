@@ -110,13 +110,18 @@ Add the configuration to your Cursor settings:
 
 Add the following to your Warp session setup:
 
-```yaml
-mcp_servers:
-  postman:
-    command: "npx"
-    args: ["postman-mcp"]
-    env:
-      POSTMAN_API_KEY: "your_postman_api_key_here"
+```json
+{
+  "postman": {
+    "command": "npx",
+    "args": ["postman-mcp"],
+    "env": {
+      "POSTMAN_API_KEY": "your_postman_api_key_here"
+    },
+    "working_directory": null,
+    "start_on_launch": true
+  }
+}
 ```
 
 #### For Other MCP Clients
