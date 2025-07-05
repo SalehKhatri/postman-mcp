@@ -45,20 +45,6 @@ A **Model Context Protocol (MCP)** server that provides seamless integration wit
 - Organize requests within folders
 - Support for hierarchical folder paths
 
-## 📦 Installation
-
-Install via npm:
-
-```bash
-npm install postman-mcp
-```
-
-Or using yarn:
-
-```bash
-yarn add postman-mcp
-```
-
 ## ⚙️ Setup
 
 ### 1. Get Your Postman API Key
