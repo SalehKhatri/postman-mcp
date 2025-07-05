@@ -10,6 +10,9 @@
     "CHANGELOG.md",
     "LICENSE"
   ],
+  "bin": {
+    "postman-mcp": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",

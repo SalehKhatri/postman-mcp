@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import dotenv from "dotenv";
 import { PostmanClient } from "./postman-client.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
