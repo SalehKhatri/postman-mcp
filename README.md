@@ -2,7 +2,7 @@
 
 A **Model Context Protocol (MCP)** server that provides seamless integration with the Postman API. This package enables AI assistants and applications to interact with Postman workspaces, collections, requests, environments, and folders programmatically.
 
-[![npm version](https://badge.fury.io/js/postman-mcp.svg)](https://badge.fury.io/js/postman-mcp)
+[![NPM Version](https://img.shields.io/npm/v/postman-mcp)](https://www.npmjs.com/package/postman-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## 🚀 Features
