@@ -342,6 +342,25 @@ export const toolDefinitions = {
         args.parentFolder
       ),
   }),
+
+  deleteFolder: defineTool({
+    name: "delete_folder",
+    description: "Delete a folder from a collection",
+    schema: z.object({
+      collectionUid: z.string().describe("The UID of the collection"),
+      folderName: z.string().describe("Name of the folder to delete"),
+      parentFolder: z
+        .string()
+        .optional()
+        .describe("Parent folder path (optional)"),
+    }),
+    handler: async (client, args) =>
+      client.deleteFolder(
+        args.collectionUid,
+        args.folderName,
+        args.parentFolder
+      ),
+  }),
 } as const;
 
 export const tools: Tool[] = Object.values(toolDefinitions).map((def) => ({

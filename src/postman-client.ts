@@ -392,6 +392,53 @@ export class PostmanClient {
     return { success: true, message: "Folder created successfully" };
   }
 
+  async deleteFolder(
+    collectionId: string,
+    folderName: string,
+    parentFolder?: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const collection = await this.getCollection(collectionId);
+
+      let targetItems = collection.item;
+
+      // Navigate to parent folder if specified
+      if (parentFolder) {
+        const folders = parentFolder.split("/");
+        for (const folderPath of folders) {
+          const folder = targetItems.find(
+            (i) => i.name === folderPath && i.item
+          );
+          if (!folder) {
+            throw new Error(`Parent folder "${folderPath}" not found`);
+          }
+          targetItems = folder.item!;
+        }
+      }
+
+      // Find and remove the target folder
+      const folderIndex = targetItems.findIndex(
+        (item) => item.name === folderName && item.item !== undefined
+      );
+
+      if (folderIndex === -1) {
+        throw new Error(`Folder "${folderName}" not found`);
+      }
+
+      // Remove the folder (this will also remove all its contents)
+      targetItems.splice(folderIndex, 1);
+
+      await this.updateCollection(collectionId, collection);
+      return { success: true, message: "Folder deleted successfully" };
+    } catch (error) {
+      throw new Error(
+        `Failed to delete folder: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+    }
+  }
+
   private findItemByName(
     items: PostmanItem[],
     name: string
